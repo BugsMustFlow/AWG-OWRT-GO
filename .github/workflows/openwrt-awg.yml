@@ -30,7 +30,26 @@ jobs:
             target: rockchip
             subtarget: armv8
     steps:
-      - uses: actions/checkout@v4
+    - name: Get release tag
+      id: release_tag
+      run: |
+        release_tag="AWGGO-$(date +%Y-%m-%d)"
+        echo "##[set-output name=release_tag;]$release_tag"
+
+    - name: Create empty release
+      id: release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.release_tag.outputs.release_tag }}
+        draft: false
+        prerelease: false
+    outputs:
+      release_tag: ${{ steps.release_tag.outputs.release_tag }}
+      #upload_url: ${{ steps.release.outputs.upload_url }}
+    
+    - uses: actions/checkout@v4
         with:
           repository: openwrt/openwrt
           ref: v${{ matrix.tag }}
