@@ -87,11 +87,11 @@ jobs:
           cp bin/packages/${{ matrix.build_env.pkgarch }}/awgopenwrt/luci-proto-amneziawg_*.ipk awgrelease/luci-proto-amneziawg_${postfix}.ipk
           cp bin/targets/${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}}/packages/kmod-amneziawg_*.ipk awgrelease/kmod-amneziawg_${postfix}.ipk
           
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.4.3
-          with:
-            name: AWGGO
-            path: awgrelease/
+      #- name: Upload a Build Artifact
+        #uses: actions/upload-artifact@v4.4.3
+          #with:
+            #name: AWGGO
+            #path: awgrelease/
 
       #- name: Release
         #uses: softprops/action-gh-release@v1
