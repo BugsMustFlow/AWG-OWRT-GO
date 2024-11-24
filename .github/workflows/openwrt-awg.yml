@@ -1,7 +1,8 @@
 name: Create Release Mediatek Filogic
 #on: [push]
 on:
-  push:
+  on:
+    workflow_dispatch:
     tags:
       - "v*.*.*"
 
