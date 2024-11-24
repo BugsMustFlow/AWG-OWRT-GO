@@ -92,14 +92,18 @@ jobs:
           #with:
             #name: AWGGO
             #path: awgrelease/
-
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AWG-$(date +%Y-%m-%d)
+          path: awgrelease/*
       #- name: Release
         #uses: softprops/action-gh-release@v1
         #with:
           #files: awgrelease/*.ipk
-      - name: Upload image to release
+      - name: Upload release
         uses: svenstaro/upload-release-action@v2
-          with:
+        with:
             repo_token: ${{ secrets.GITHUB_TOKEN }}
             file: awgrelease/*.ipk
             #asset_name: ${{ steps.config.outputs.img_filename }}.gz
