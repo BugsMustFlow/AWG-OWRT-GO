@@ -1,16 +1,9 @@
-name: Create Release Rockchip armv8
+name: Create Release Mediatek Filogic
 #on: [push]
-#on:
-    #workflow_dispatch:
-   # tags:
-      #- "v*.*.*"
 on:
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -25,8 +18,7 @@ jobs:
             target: rockchip
             subtarget: armv8
     steps:
-    
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           repository: openwrt/openwrt
           ref: v${{ matrix.tag }}
@@ -96,7 +88,6 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v1
-        release_tag="AWGGO-$(date +%Y-%m-%d)"
         with:
           files: awgrelease/*.ipk
 
