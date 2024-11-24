@@ -4,7 +4,6 @@
     #workflow_dispatch:
    # tags:
       #- "v*.*.*"
-name: Create Release Rockchip armv8
 on:
   workflow_dispatch:
     inputs:
