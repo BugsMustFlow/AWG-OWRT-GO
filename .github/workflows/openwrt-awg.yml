@@ -1,10 +1,11 @@
-name: Create Release Mediatek Filogic
+name: Create Release AWGGO
 #on: [push]
+#on:
+  #push:
+    #tags:
+      #- "v*.*.*"
 on:
-  push:
-    tags:
-      - "v*.*.*"
-
+  workflow_dispatch:
 jobs:
   build:
     name: "v${{ matrix.tag }} - ${{ matrix.build_env.pkgarch}} :: ${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}} build"
@@ -85,11 +86,25 @@ jobs:
           cp bin/packages/${{ matrix.build_env.pkgarch }}/awgopenwrt/amneziawg-go_*.ipk awgrelease/amneziawg-go_${postfix}.ipk
           cp bin/packages/${{ matrix.build_env.pkgarch }}/awgopenwrt/luci-proto-amneziawg_*.ipk awgrelease/luci-proto-amneziawg_${postfix}.ipk
           cp bin/targets/${{ matrix.build_env.target}}/${{ matrix.build_env.subtarget}}/packages/kmod-amneziawg_*.ipk awgrelease/kmod-amneziawg_${postfix}.ipk
+          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.4.3
+          with:
+            name: AWGGO
+            path: awgrelease/
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: awgrelease/*.ipk
+      #- name: Release
+        #uses: softprops/action-gh-release@v1
+        #with:
+          #files: awgrelease/*.ipk
+      - name: Upload image to release
+        uses: svenstaro/upload-release-action@v2
+          with:
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+            file: awgrelease/*.ipk
+            #asset_name: ${{ steps.config.outputs.img_filename }}.gz
+            tag: "AWG-$(date +%Y-%m-%d)"
+            overwrite: true
 
       - name: Cleanup
         run: |
