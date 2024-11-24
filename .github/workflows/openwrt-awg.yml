@@ -1,7 +1,6 @@
-name: Create Release Mediatek Filogic
+name: Create Release Rockchip armv8
 #on: [push]
 on:
-  on:
     workflow_dispatch:
     tags:
       - "v*.*.*"
